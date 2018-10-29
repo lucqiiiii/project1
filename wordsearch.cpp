@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
 {
   string dir; //
   vector<string> files = vector<string>();
+  word *wordlist = new word[1000];
 
   if (argc < 2)
     {
@@ -57,7 +58,14 @@ int main(int argc, char* argv[])
 	cout<<files[i]<<"::"<<word<<endl;
 	
 	// Now the string "word" holds the keyword, and the string "files[i]" holds the document name.
-	// Use these two strings to search/insert in your array/list of words.
+	// Use these two strings to search/insert in your array/list of 
+	if (word word == NULL){
+		word word(word, files[i]);
+	}
+	else{
+		
+	}
+	wordlist[i](word,files[i]);
       }
     }
     fin.close();

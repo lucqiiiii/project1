@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "word.h"
 
 using namespace std;
 
@@ -30,8 +31,8 @@ int main(int argc, char* argv[])
 {
   string dir; //
   vector<string> files = vector<string>();
-  word *wordlist = new word[1000];
-
+  word *wordlist[1000];
+  int used = 0;
   if (argc < 2)
     {
       cout << "No Directory specified; Exiting ..." << endl;
@@ -50,30 +51,44 @@ int main(int argc, char* argv[])
     if(files[i][0]=='.')continue; //skip hidden files
     ifstream fin((string(argv[1])+slash+files[i]).c_str()); //open using absolute path
     // ...read the file...
-    string word;
+    string keyword;
     while(true){
-      fin>>word;
+      fin>> keyword;
       if(fin.eof()) {cout << "EOF " << files[i] << endl; break;}
       else {
-	cout<<files[i]<<"::"<<word<<endl;
+	cout<<files[i]<<"::"<< keyword <<endl;
 	
-	// Now the string "word" holds the keyword, and the string "files[i]" holds the document name.
+	// Now the string "keyword" holds the keyword, and the string "files[i]" holds the document name.
 	// Use these two strings to search/insert in your array/list of 
-	if (word word == NULL){
-		word word(word, files[i]);
+	if(used > 1000){
+		cout << "Maximum word storage reached." << endl;
 	}
 	else{
-		
-	}
-	wordlist[i](word,files[i]);
+		unsigned int j = 0;
+		for(j = 0; j < used; j++){
+			if(wordlist[j].getWord() == keyword){
+				wordlist[j].modification(files[i]);
+				break;
+			}
+		}
+		if(j == used){
+			word a(keyword,files[i]);
+			used ++;		
+			wordlist[used] = a;
+		}
       }
     }
     fin.close();
   }
-
   cout << "This is the next part of the program " << endl;
-
+  string input;
+  cout << "Enter a word you want to search:" << endl;
+  cin >> input; 
+  for( unsigned int i = 0; i < used; i++){
+	if(wordlist[i].getWord() == input){
+  		wordlist[i].getFiles_word().print();
+	}
+  }
 }
-
-
+}
 

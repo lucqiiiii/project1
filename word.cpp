@@ -1,3 +1,4 @@
+//Qi Guo Project1
 #include "word.h"
 #include <iostream>
 using namespace std;

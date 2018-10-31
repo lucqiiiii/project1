@@ -7,18 +7,19 @@ using namespace std;
 
 class word{
     public:
-        //Constructor
-	word(string keyword, string fname);
+        //Constructor: construct a string array that store all the words
+        //and link that array to a bag array
+	word(unsigned int initial_capacity = 0); 
         //Modification Member Functions
-	void modification(string fname);
+        //add a word in the string array wordlist and a bag in the bag array
+        void add_word(string word, string filesname); 
         //Constant Member Functions
-        string getWord() const;
-	string getFilename() const;
-	bag getFiles_word() const;
+	int get_information(string word) const;
 
     private:
-	string keyword;
-	string fname;
+	unsigned int capacity;
+	unsigned int used;
+	string *wordlist;
 	bag *files_word;
 };
 

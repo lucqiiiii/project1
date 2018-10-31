@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 {
   string dir; //
   vector<string> files = vector<string>();
-  word *wordlist[1000];
+  word myword(1000);
   int used = 0;
   if (argc < 2)
     {
@@ -51,44 +51,32 @@ int main(int argc, char* argv[])
     if(files[i][0]=='.')continue; //skip hidden files
     ifstream fin((string(argv[1])+slash+files[i]).c_str()); //open using absolute path
     // ...read the file...
-    string keyword;
+    string word;
     while(true){
-      fin>> keyword;
+      fin>> word;
       if(fin.eof()) {cout << "EOF " << files[i] << endl; break;}
       else {
-	cout<<files[i]<<"::"<< keyword <<endl;
+	cout<<files[i]<<"::"<< word <<endl;
 	
-	// Now the string "keyword" holds the keyword, and the string "files[i]" holds the document name.
+	// Now the string "word" holds the keyword, and the string "files[i]" holds the document name.
 	// Use these two strings to search/insert in your array/list of 
-	if(used > 1000){
-		cout << "Maximum word storage reached." << endl;
-	}
-	else{
-		unsigned int j = 0;
-		for(j = 0; j < used; j++){
-			if(wordlist[j].getWord() == keyword){
-				wordlist[j].modification(files[i]);
-				break;
-			}
-		}
-		if(j == used){
-			word a(keyword,files[i]);
-			used ++;		
-			wordlist[used] = a;
-		}
+	
+	myword.add_word(word,files[i]);
       }
     }
-    fin.close();
+    fin.close();    
   }
+  cout << "--------------------------------------" << endl;
   cout << "This is the next part of the program " << endl;
   string input;
-  cout << "Enter a word you want to search:" << endl;
-  cin >> input; 
-  for( unsigned int i = 0; i < used; i++){
-	if(wordlist[i].getWord() == input){
-  		wordlist[i].getFiles_word().print();
+  do{
+	cout << "Enter a word you want to search, "
+	<< "or 'exit' to stop the program:";
+	cin >> input;
+	if(input == "exit"){
+		break;
 	}
-  }
-}
+	myword.get_information(input);
+  }while(true);
 }
 
